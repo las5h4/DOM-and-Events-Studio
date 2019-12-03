@@ -6,6 +6,7 @@ window.addEventListener("load", function(){
     let shuttleBackground = document.getElementById("shuttleBackground")
     let shuttleHeight = document.getElementById("spaceShuttleHeight")
     let land = document.getElementById("landing")
+    let missionAbort = document.getElementById("missionAbort")
     takeoff.addEventListener("click", function (){
         let confirmation = window.confirm("Confirm that the shuttle is ready for takeoff.")
         if (confirmation === true) {
@@ -19,5 +20,13 @@ window.addEventListener("load", function(){
         flightStatus.innerHTML = "Shuttle has landed"
         shuttleBackground.style.backgroundColor = "green"
         shuttleHeight.innerHTML = 0
+    })
+    missionAbort.addEventListener("click", function(){
+        let abortConfirm = window.confirm("Confirm that you want to abort the mission.")
+        if (abortConfirm === true) {
+            flightStatus.innerHTML = "Mission aborted"
+            shuttleBackground.style.backgroundColor = "green"
+            shuttleHeight.innerHTML = 0
+        }
     })
 })
