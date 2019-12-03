@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script>
+            window.addEventListener("load" function() {
+                let takeoff = document.getElementById("takeoff")
+                takeoff.addEventListener("click", function() {
+                    let response = window.confirm("Confirm that the shuttle is ready for takeoff")
+                    if (response === true) {
+                        document.getElementById("flightstatus") = "Shuttle in flight."
+                        document.getElementById("shuttleBackground")["color"] = "blue"
+                    }
+                })
+            })
+            </script>
         <title>Flight Simulator</title>
         <link rel = "stylesheet" type = "text/css" href = "styles.css" />
         <script src = "scripts.js"></script>
