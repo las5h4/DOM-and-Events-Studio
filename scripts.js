@@ -41,19 +41,30 @@ window.addEventListener("load", function(){
         window.alert("Shuttle is landing. Langing gear engaged.")
         flightStatus.innerHTML = "Shuttle has landed"
         shuttleBackground.style.backgroundColor = "green"
+        shuttleHeightNum = 0
         shuttleHeight.innerHTML = 0
+        rocket.style.bottom = "0px"
     })
     missionAbort.addEventListener("click", function(){
         let abortConfirm = window.confirm("Confirm that you want to abort the mission.")
         if (abortConfirm === true) {
             flightStatus.innerHTML = "Mission aborted"
             shuttleBackground.style.backgroundColor = "green"
+            shuttleHeightNum = 0
             shuttleHeight.innerHTML = 0
+            rocket.style.bottom = "0px"
+            rocket.style.left = "50%"
         }
     })
     
     up.addEventListener("click", function(){
         let newHeightObj = changeHeight("up", shuttleHeightNum)            
+        shuttleHeightNum = newHeightObj.height
+        shuttleHeight.innerHTML = shuttleHeightNum
+        rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
+    })
+    down.addEventListener("click", function(){
+        let newHeightObj = changeHeight("down", shuttleHeightNum)            
         shuttleHeightNum = newHeightObj.height
         shuttleHeight.innerHTML = shuttleHeightNum
         rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
