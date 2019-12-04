@@ -16,7 +16,11 @@ function changeHeight(direction, height) {
 window.addEventListener("load", function(){
     let takeoff = document.getElementById("takeoff")
     let flightStatus = document.getElementById("flightStatus")
+    let rocket = document.querySelector("img") 
     let shuttleBackground = document.getElementById("shuttleBackground")
+    let shuttleBackgroundWidth = shuttleBackground.clientWidth
+    let startingPos = (shuttleBackgroundWidth / 2) - 37
+    let horizontalPos = startingPos
     let shuttleHeight = document.getElementById("spaceShuttleHeight")
     shuttleHeightNum = Number(shuttleHeight.innerHTML)
     let land = document.getElementById("landing")
@@ -25,7 +29,8 @@ window.addEventListener("load", function(){
     let down = document.getElementById("down")
     let right = document.getElementById("right")
     let left = document.getElementById("left")
-    let rocket = document.querySelector("img")    
+    rocket.style.left = String(horizontalPos)+"px"
+       
     takeoff.addEventListener("click", function (){
         let confirmation = window.confirm("Confirm that the shuttle is ready for takeoff.")
         if (confirmation === true) {
@@ -53,7 +58,7 @@ window.addEventListener("load", function(){
             shuttleHeightNum = 0
             shuttleHeight.innerHTML = 0
             rocket.style.bottom = "0px"
-            rocket.style.left = "50%"
+            rocket.style.left = String(startingPos)+"px"
         }
     })
     
@@ -68,5 +73,9 @@ window.addEventListener("load", function(){
         shuttleHeightNum = newHeightObj.height
         shuttleHeight.innerHTML = shuttleHeightNum
         rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
+    })
+    left.addEventListener("click", function(){
+        horizontalPos -= 10
+        rocket.style.left = String(horizontalPos)+"px"
     })
 })
