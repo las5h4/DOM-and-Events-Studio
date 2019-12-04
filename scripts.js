@@ -78,4 +78,8 @@ window.addEventListener("load", function(){
         horizontalPos -= 10
         rocket.style.left = String(horizontalPos)+"px"
     })
+    right.addEventListener("click", function(){
+        horizontalPos += 10
+        rocket.style.left = String(horizontalPos)+"px"
+    })
 })
