@@ -13,6 +13,7 @@ function changeHeight(direction, height) {
     }
     return heightObj
 }
+
 window.addEventListener("load", function(){
     let takeoff = document.getElementById("takeoff")
     let flightStatus = document.getElementById("flightStatus")
@@ -42,14 +43,22 @@ window.addEventListener("load", function(){
             rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
         }
     })
-    land.addEventListener("click", function (){
+    let landShuttle = function (){
         window.alert("Shuttle is landing. Langing gear engaged.")
         flightStatus.innerHTML = "Shuttle has landed"
         shuttleBackground.style.backgroundColor = "green"
         shuttleHeightNum = 0
         shuttleHeight.innerHTML = 0
         rocket.style.bottom = "0px"
-    })
+    }
+    land.addEventListener("click", landShuttle)
+    //     window.alert("Shuttle is landing. Langing gear engaged.")
+    //     flightStatus.innerHTML = "Shuttle has landed"
+    //     shuttleBackground.style.backgroundColor = "green"
+    //     shuttleHeightNum = 0
+    //     shuttleHeight.innerHTML = 0
+    //     rocket.style.bottom = "0px"
+    // })
     missionAbort.addEventListener("click", function(){
         let abortConfirm = window.confirm("Confirm that you want to abort the mission.")
         if (abortConfirm === true) {
@@ -63,23 +72,58 @@ window.addEventListener("load", function(){
     })
     
     up.addEventListener("click", function(){
-        let newHeightObj = changeHeight("up", shuttleHeightNum)            
-        shuttleHeightNum = newHeightObj.height
-        shuttleHeight.innerHTML = shuttleHeightNum
-        rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
+        if (flightStatus.innerHTML === "Shuttle in flight") {
+            if ((shuttleHeightNum / 1000) < (shuttleBackground.clientHeight - 75)) {
+                let newHeightObj = changeHeight("up", shuttleHeightNum)            
+                shuttleHeightNum = newHeightObj.height
+                shuttleHeight.innerHTML = shuttleHeightNum
+                rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
+            } else if ((shuttleHeightNum / 1000) >= (shuttleBackground.clientHeight - 75)) {
+                window.alert("Shuttle cannot leave the box!")
+            }
+        } else {
+            window.alert("The shuttle must take off before it can move!")
+        }
     })
     down.addEventListener("click", function(){
-        let newHeightObj = changeHeight("down", shuttleHeightNum)            
-        shuttleHeightNum = newHeightObj.height
-        shuttleHeight.innerHTML = shuttleHeightNum
-        rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
+         if (flightStatus.innerHTML === "Shuttle in flight") {  
+            if ((shuttleHeightNum / 1000) > 10) {
+                let newHeightObj = changeHeight("down", shuttleHeightNum)            
+                shuttleHeightNum = newHeightObj.height
+                shuttleHeight.innerHTML = shuttleHeightNum
+                rocket.style.bottom = String(newHeightObj.imgHeight)+"px"
+            } else if ((shuttleHeightNum / 1000) <= 10) {
+                let landConfirm = window.confirm("You are preparing to land the shuttle. Proceed?")
+                if (landConfirm === true) {
+                    landShuttle()
+                }
+            }
+        } else {
+            window.alert("The shuttle must take off before it can move!")
+        }
     })
     left.addEventListener("click", function(){
-        horizontalPos -= 10
-        rocket.style.left = String(horizontalPos)+"px"
+        if (flightStatus.innerHTML === "Shuttle in flight") {   
+            if (horizontalPos > 0) {
+                horizontalPos -= 10
+                rocket.style.left = String(horizontalPos)+"px"
+            } else if (horizontalPos <= 0) {
+                window.alert("Shuttle cannot leave the box!")
+            }
+        } else {
+            window.alert("The shuttle must take off before it can move!")
+        }
     })
     right.addEventListener("click", function(){
-        horizontalPos += 10
-        rocket.style.left = String(horizontalPos)+"px"
+        if (flightStatus.innerHTML === "Shuttle in flight") {   
+            if (horizontalPos < (shuttleBackgroundWidth - 75)){
+                horizontalPos += 10
+                rocket.style.left = String(horizontalPos)+"px"
+            } else if (horizontalPos >= (shuttleBackgroundWidth - 75)) {
+                window.alert("Shuttle cannot leave the box!")
+            }
+        } else {
+            window.alert("The shuttle must take off before it can move!")
+        }
     })
 })
